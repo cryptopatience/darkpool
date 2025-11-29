@@ -20,6 +20,40 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
+
+# ==================== 로그인 시스템 ====================
+def check_password():
+    """비밀번호 확인 및 로그인 상태 관리"""
+    if st.session_state.get('password_correct', False):
+        return True
+    
+    st.title("🔒 MAG 7+2 퀀트 대시보드 로그인")
+    st.markdown("### Magnificent Seven + Bitcoin Exposure 종합 분석")
+    
+    with st.form("credentials"):
+        username = st.text_input("아이디 (ID)", key="username")
+        password = st.text_input("비밀번호 (Password)", type="password", key="password")
+        submit_btn = st.form_submit_button("로그인", type="primary")
+    
+    if submit_btn:
+        if username in st.secrets["passwords"] and password == st.secrets["passwords"][username]:
+            st.session_state['password_correct'] = True
+            st.rerun()
+        else:
+            st.error("😕 아이디 또는 비밀번호가 올바르지 않습니다.")
+    
+    return False
+
+if not check_password():
+    st.stop()
+
+# ==================== 로그아웃 버튼 ====================
+with st.sidebar:
+    st.success(f"✅ 로그인 성공!")
+    if st.button("🚪 로그아웃"):
+        st.session_state['password_correct'] = False
+        st.rerun()
 # ==================== 설정 및 종목 리스트 ====================
 MAG7_STOCKS = {
     'AAPL': 'Apple', 'MSFT': 'Microsoft', 'GOOGL': 'Alphabet',
