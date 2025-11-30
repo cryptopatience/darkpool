@@ -888,7 +888,7 @@ fig4_1.update_layout(
     height=650,
     template='plotly_white',
     xaxis=dict(range=[30, 70]),
-    yaxis=dict(range=[20, 65])
+    yaxis=dict(range=[25, 65])
 )
 
 st.plotly_chart(fig4_1, use_container_width=True)
